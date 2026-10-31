@@ -1,0 +1,35 @@
+# b2bsearch workflows
+
+
+| Workflow | What it does | n8n | Guide |
+|---|---|---|---|
+| New hires signal | Every Monday, who joined your target accounts in a buying role and where they came from, to Slack | [new-hires-to-slack.json](n8n/new-hires-to-slack.json) | [articles/new-hires-signal.md](articles/new-hires-signal.md) |
+| LinkedIn URLs to work emails | A sheet of LinkedIn profile URLs to emails on record, one Actor run for the whole list | [linkedin-urls-to-work-emails-sheets.json](n8n/linkedin-urls-to-work-emails-sheets.json) | |
+| Domains to decision makers | Founders, C-level, VPs and directors for a list of company domains | [company-domains-to-decision-makers-sheets.json](n8n/company-domains-to-decision-makers-sheets.json) | |
+| Best customers to lookalike accounts | Seed domains to similar companies to the people at each | [best-customers-to-lookalike-accounts-sheets.json](n8n/best-customers-to-lookalike-accounts-sheets.json) | [articles/lookalike-accounts.md](articles/lookalike-accounts.md) |
+| Sign-up enrichment to HubSpot | Webhook with an email to person, title, company, HubSpot contact | [signup-email-enrichment-hubspot.json](n8n/signup-email-enrichment-hubspot.json) | |
+| Email format check | The work email convention of each domain before you guess addresses | [company-email-format-check-sheets.json](n8n/company-email-format-check-sheets.json) | [articles/company-email-format.md](articles/company-email-format.md) |
+| B2B lead list with emails | ICP filters to leads with an email, an Apollo alternative | [b2b-lead-list-with-emails-apollo-alternative-sheets.json](n8n/b2b-lead-list-with-emails-apollo-alternative-sheets.json) | |
+| Champion tracking | Who left your customers' companies and where they work now | [former-employees-champion-tracking-sheets.json](n8n/former-employees-champion-tracking-sheets.json) | |
+
+Each guide has a version for Claude Code (a prompt over the Apify MCP server) and a version for n8n.
+
+## Import an n8n workflow
+
+1. In n8n: Workflows → Import from File, pick the JSON.
+2. Open the Apify node, add your Apify credential (API token from Apify Console → Settings → Integrations). The node is the official `@apify/n8n-nodes-apify`, available on n8n Cloud and self-hosted.
+3. Follow the yellow sticky note in the workflow for the remaining setup.
+
+On the Free Apify plan each Actor gives an account 500 rows a month and up to 100 rows per run; the people and leads searches (`b2b-leads-finder`, `people-database-search`) return up to 25 rows per run when n8n starts them, so the lead-list workflow fills 25 rows at a time there. Any paid Apify plan lifts these limits.
+
+## Run the same thing from an agent
+
+Agent skills: `npx skills add keyvwin/skills` ([repository](https://github.com/keyvwin/skills)). Local MCP server with task-named tools: [b2bsearch/mcp](https://github.com/keyvwin/mcp). One plugin for Grok Bot, Cursor and Claude Code, with job postings and hiring signals: [b2bsearch-plugin](https://github.com/keyvwin/b2bsearch-plugin).
+
+## Disclosure
+
+The Actors these workflows call are built by the author of this repository. No affiliate or referral parameters are used. Not affiliated with LinkedIn.
+
+## License
+
+MIT
